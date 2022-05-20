@@ -47,21 +47,47 @@ library(here)
 ## "Online Dating" Data Collection
 
 ```{r}
+terms <- c("online dating", 
+           "love", 
+           "Dating apps",
+           "Bumble", 
+           "Hinge",
+           "date from home",
+           "sex",
+           "hugging",
+           "kissing",
+           "hookups",
+           "Relationship",
+           "Video dating",
+           "Intimacy",
+           "Romance",
+           "Match",
+           "First date etiquette",
+           "Date ideas",
+           "Outdoor dates")
+
+terms_df <- as_tibble(terms)
+```
+
+
+```{r}
 onlinedating <- gtrends(
   c('online dating'),
   geo='US')
 
-saveRDS(onlinedating, '/Users/georgiannajames/Desktop/onlinedating.RDS')
+saveRDS(onlinedating, here("data", "onlinedating.RDS"))
 
 #Plot
 plot(onlinedating)
 
 ```
+
+
 ```{r}
 
-# create online dating data fram
+# create online dating data frame
 
-write.csv(onlinedating$interest_over_time, "online_dating_interest_overtime.csv", row.names=TRUE)
+write.csv(onlinedating$interest_over_time, here("data", "online_dating_interest_overtime.csv"), row.names=TRUE)
 
 online_dating <- read.csv("online_dating_interest_overtime.csv")
 
@@ -76,7 +102,7 @@ love <- gtrends(
   c('love'),
   geo='US')
 
-saveRDS(love, '/Users/georgiannajames/Desktop/PSYC28791Final/RDS/love.RDS')
+saveRDS(love, here("data", "love.RDS"))
 
 #Plot
 plot(love)

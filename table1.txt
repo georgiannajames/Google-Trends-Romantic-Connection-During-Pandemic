@@ -1,21 +1,21 @@
 
-love Regression Table
+online dating Regression Table
 ===============================================
                         Dependent variable:    
                     ---------------------------
-                               love            
+                           online dating       
 -----------------------------------------------
-Pandemic                     -5.781***         
-                              (0.620)          
+Pandemic                    -20.967***         
+                              (1.186)          
                                                
-No Pandemic                  77.211***         
-                              (0.410)          
+No Pandemic                  77.476***         
+                              (0.784)          
                                                
 -----------------------------------------------
 Observations                    261            
-R2                             0.251           
-Adjusted R2                    0.249           
-Residual Std. Error      4.966 (df = 259)      
-F Statistic           87.024*** (df = 1; 259)  
+R2                             0.547           
+Adjusted R2                    0.545           
+Residual Std. Error      9.501 (df = 259)      
+F Statistic          312.711*** (df = 1; 259)  
 ===============================================
 Note:               *p<0.1; **p<0.05; ***p<0.01

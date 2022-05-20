@@ -40,6 +40,7 @@ library(gtrendsR)
 library(tidyverse)
 library(lubridate)
 library(stargazer)
+library(here)
 
 ```
 

@@ -2,7 +2,7 @@
 
 reports <- tibble(
   single_term = unique(terms$value),
-  filename = stringr::str_c("term-report-", single_term, ".html"),
+  filename = stringr::str_c("term-report-", single_term, ".github"),
   params = purrr::map(single_term, ~ list(my_term = .))
 )
 

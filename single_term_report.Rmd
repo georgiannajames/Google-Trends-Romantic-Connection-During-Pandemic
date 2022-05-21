@@ -84,7 +84,7 @@ stargazer(single_term_regression,
             title=glue::glue("{params$my_term} Regression Table"), 
   dep.var.labels=glue::glue("{params$my_term}"),
   covariate.labels=c("Pandemic","No Pandemic"),
-  digits=3, out = "table1.txt")
+  digits=3, out = glue::glue("{params$my_term}.txt"))
 
 ```
 

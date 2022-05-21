@@ -17,6 +17,182 @@ further_search_terms <- read_csv(here("data", "further_terms.csv"))
 further_search_terms
 ```
 ```{r}
-# combining 
+# read in all search term data frames
+
+hugging <- read_csv(here("data", "hugging.csv"))
+
+bumble <- read_csv(here("data", "Bumble.csv"))
+
+date_from_home <- read_csv(here("data", "date from home.csv"))
+
+date_ideas <- read_csv(here("data", "date_ideas.csv"))
+
+dating_apps <- read_csv(here("data", "Dating apps.csv"))
+
+hinge <- read_csv(here("data", "Hinge.csv"))
+
+hookups <- read_csv(here("data", "hookups.csv"))
+
+hugging <- read_csv(here("data", "hugging.csv"))
+
+intimacy <- read_csv(here("data", "Intimacy.csv"))
+
+kissing <- read_csv(here("data", "kissing.csv"))
+
+love <- read_csv(here("data", "love.csv"))
+
+match <- read_csv(here("data", "Match.csv"))
+
+online_dating <- read_csv(here("data", "online dating.csv"))
+
+outdoor_dates <- read_csv(here("data", "Outdoor dates.csv"))
+
+relationship <- read_csv(here("data", "Relationship.csv"))
+
+romance <- read_csv(here("data", "Romance.csv"))
+
+sex <- read_csv(here("data", "sex.csv"))
+
+video_dating <- read_csv(here("data", "Video dating.csv"))
+
+
+```
+
+## Creating Pandemic Dating Terms Data Set
+
+```{r}
+# joining outdoor dates and date ideas
+pandemic_dating <- full_join(outdoor_dates, date_ideas, by = "date") %>% 
+  rename(outdoor_dates = hits.x, date_ideas = hits.y) %>% 
+  select(date, outdoor_dates, date_ideas)
+```
+
+
+```{r}
+# adding first date etiquette to df
+
+pandemic_dating <-full_join(pandemic_dating, first_date_etiquette, by = "date") %>% 
+  rename(first_date_etiquette = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette)
+```
+
+
+```{r}
+# adding pandemic dating to df
+pandemic_dating <-full_join(pandemic_dating, match, by = "date")%>% 
+  rename(match = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match)
+```
+
+```{r}
+# adding romance column 
+
+pandemic_dating <-full_join(pandemic_dating, romance, by = "date")%>% 
+  rename(romance = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance)
+```
+
+```{r}
+# adding intimacy column
+
+pandemic_dating <-full_join(pandemic_dating, intimacy, by = "date")%>% 
+  rename(intimacy = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy)
+```
+
+```{r}
+# adding video dating
+pandemic_dating <-full_join(pandemic_dating, video_dating, by = "date")%>% 
+  rename(video_dating = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating)
+```
+
+```{r}
+# adding relationships column
+pandemic_dating <-full_join(pandemic_dating, relationships, by = "date") %>% 
+  rename(relationships = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships)
+```
+
+```{r}
+# adding hookups columns
+
+pandemic_dating <-full_join(pandemic_dating, hookups, by = "date") %>% 
+    rename(hookups = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups)
+  
+```
+
+```{r}
+# adding kissing columns
+
+pandemic_dating <-full_join(pandemic_dating, kissing, by = "date") %>% 
+    rename(kissing = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing)
+```
+
+```{r}
+# adding hugging column
+
+pandemic_dating <-full_join(pandemic_dating, hugging, by = "date") %>% 
+    rename(hugging = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging)
+```
+
+```{r}
+# adding sex column
+
+pandemic_dating <-full_join(pandemic_dating, sex, by = "date") %>% 
+    rename(sex = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex)
+```
+
+```{r}
+# adding date from home column
+
+pandemic_dating <-full_join(pandemic_dating, date_from_home, by = "date") %>% 
+    rename(date_from_home = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home)
+```
+
+```{r}
+# adding hinge column
+
+pandemic_dating <-full_join(pandemic_dating, hinge, by = "date") %>% 
+    rename(hinge = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge)
+```
+
+```{r}
+# adding bumble column
+
+pandemic_dating <-full_join(pandemic_dating, bumble, by = "date") %>% 
+    rename(bumble = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble)
+```
+
+
+```{r}
+# adding dating apps column
+
+pandemic_dating <-full_join(pandemic_dating, dating_apps, by = "date") %>% 
+    rename(dating_apps = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps)
+```
+
+```{r}
+# adding love column
+
+pandemic_dating <-full_join(pandemic_dating, love, by = "date") %>% 
+    rename(love = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps, love)
+```
+
+```{r}
+# add online dating column
+
+pandemic_dating <-full_join(pandemic_dating, online_dating, by = "date") %>% 
+    rename(online_dating = hits) %>% 
+   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps, love, online_dating)
 ```
 

@@ -27,6 +27,9 @@ library(here)
 ## "Online Dating" Data Collection
 
 ```{r}
+
+dir.create("data")
+
 term <- c("online dating", 
            "love", 
            "Dating apps",

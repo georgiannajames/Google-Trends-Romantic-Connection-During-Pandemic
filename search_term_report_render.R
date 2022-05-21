@@ -1,4 +1,4 @@
-# create an iterization over every term in the search terms df
+# create a function to iterize over every term in the search terms df
 
 reports <- tibble(
   single_term = unique(terms$value),
@@ -13,7 +13,7 @@ reports
 
 dir.create("reports")
 
-#render a new file for each row/country
+#render a new file for each term
 reports %>% 
   select(output_file = filename, params) %>% 
   purrr::pwalk(rmarkdown::render, input = "single_term_report.Rmd", output_dir = "reports")

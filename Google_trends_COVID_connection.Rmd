@@ -27,7 +27,7 @@ library(here)
 ## "Online Dating" Data Collection
 
 ```{r}
-terms <- c("online dating", 
+term <- c("online dating", 
            "love", 
            "Dating apps",
            "Bumble", 
@@ -42,7 +42,6 @@ terms <- c("online dating",
            "Intimacy",
            "Romance",
            "Match",
-           "First date etiquette",
            "Date ideas",
            "Outdoor dates",
            "Netflix party", 
@@ -50,9 +49,9 @@ terms <- c("online dating",
            "Groupwatch"
            )
 
-terms_df <- as_tibble(terms)
+terms_df <- as_tibble(term)
 
-write.csv(terms, here("data", "search_terms.csv"), row.names=TRUE)
+write.csv(terms_df, here("data", "search_terms.csv"), row.names=TRUE)
 
 
 ```
@@ -75,5 +74,9 @@ additional_terms <- onlinedating$related_queries %>%
   
 
 further_terms <- rbind(terms_df, additional_terms)
+
+write.csv(further_terms, here("data", "further_terms.csv"), row.names=TRUE)
 ```
+
+
 

@@ -1,21 +1,21 @@
 
-online dating Regression Table
+Outdoor dates Regression Table
 ===============================================
                         Dependent variable:    
                     ---------------------------
-                           online dating       
+                           Outdoor dates       
 -----------------------------------------------
-Pandemic                    -20.967***         
-                              (1.186)          
+Pandemic                      4.878**          
+                              (2.219)          
                                                
-No Pandemic                  77.476***         
-                              (0.784)          
+No Pandemic                  44.122***         
+                              (1.467)          
                                                
 -----------------------------------------------
 Observations                    261            
-R2                             0.547           
-Adjusted R2                    0.545           
-Residual Std. Error      9.501 (df = 259)      
-F Statistic          312.711*** (df = 1; 259)  
+R2                             0.018           
+Adjusted R2                    0.015           
+Residual Std. Error      17.784 (df = 259)     
+F Statistic            4.830** (df = 1; 259)   
 ===============================================
 Note:               *p<0.1; **p<0.05; ***p<0.01

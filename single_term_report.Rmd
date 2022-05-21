@@ -78,7 +78,8 @@ single_term_df <- single_term_df %>%
     ) %>% 
   mutate(
     pandemic_dates = ifelse(date %within% interval(ymd(20170811), ymd(20180310)) | date %within% interval(ymd(20190811), ymd(20200310)), 0, 1),
-    pandemic_year = ifelse(year == 2017 | year == 2018, 0, 1)
+    pandemic_year = ifelse(year == 2017 | year == 2018, 0, 1),
+    pandemic = ifelse(pandemic_dates == 1 & pandemic_year == 1, 1, 0)
   )
 
 
@@ -88,13 +89,13 @@ single_term_df <- single_term_df %>%
 
 # run a regression of the effect of the pandemic on the search term
 
-single_term_regression <- lm(hits ~ pandemic_dates + pandemic_year, data = single_term_df)
+single_term_regression <- lm(hits ~ pandemic_dates + pandemic_year + pandemic, data = single_term_df)
 
 stargazer(single_term_regression,
            type = "text",
             title=glue::glue("{params$my_term} Regression Table"), 
   dep.var.labels=glue::glue("{params$my_term}"),
-  covariate.labels=c("March 11 - August 10 ","2020", "No Pandemic"),
+  covariate.labels=c("Pandemic", "March 11 - August 10 ","2020", "No Pandemic"),
   digits=3, out = glue::glue("{params$my_term}.txt"))
 
 ```

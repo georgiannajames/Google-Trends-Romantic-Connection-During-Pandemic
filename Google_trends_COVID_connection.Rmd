@@ -27,8 +27,11 @@ library(here)
 ## "Online Dating" Data Collection
 
 ```{r}
+# create a data folder 
 
 dir.create("data")
+
+# create a terms df 
 
 term <- c("online dating", 
            "love", 
@@ -46,10 +49,7 @@ term <- c("online dating",
            "Romance",
            "Match",
            "Date ideas",
-           "Outdoor dates",
-           "Netflix party", 
-           "Virtual movie night",
-           "Groupwatch"
+           "Outdoor dates"
            )
 
 terms_df <- as_tibble(term)
@@ -61,6 +61,8 @@ write.csv(terms_df, here("data", "search_terms.csv"), row.names=TRUE)
 
 
 ```{r}
+# test out g trends function
+
 onlinedating <- gtrends(
   c('online dating'),
   geo='US')
@@ -72,6 +74,8 @@ plot(onlinedating)
 
 ```
 ```{r}
+# create a df to put all related queries in one df
+
 additional_terms <- onlinedating$related_queries %>% 
   select(value)
   

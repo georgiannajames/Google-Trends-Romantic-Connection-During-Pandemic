@@ -1,0 +1,22 @@
+---
+title: "Combining Search Term Data"
+author: "Georgianna James"
+date: '2022-05-21'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Visualizing further search terms 
+
+further_search_terms <- read_csv(here("data", "further_terms.csv"))
+
+further_search_terms
+```
+```{r}
+# combining 
+```
+

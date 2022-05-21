@@ -20,6 +20,7 @@ library(lubridate)
 library(stargazer)
 library(here)
 library(janitor)
+library(ggplot2)
 
 ```
 
@@ -68,6 +69,8 @@ single_term_df <- single_term_df %>%
   select(date, hits) %>% 
   mutate(
     date= ymd(date),
+    month = month(date),
+    day = day(date),
     year = year(date)
         ) %>% 
   filter(
@@ -95,6 +98,7 @@ stargazer(single_term_regression,
   digits=3, out = glue::glue("{params$my_term}.txt"))
 
 ```
+
 
 
 ```{r}

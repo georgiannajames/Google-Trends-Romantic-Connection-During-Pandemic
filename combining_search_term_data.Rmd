@@ -9,6 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## Required Packages 
+
+```{r}
+library(gtrendsR)
+library(tidyverse)
+library(lubridate)
+library(stargazer)
+library(here)
+
+```
+
+
 ```{r}
 # Visualizing further search terms 
 
@@ -25,7 +38,7 @@ bumble <- read_csv(here("data", "Bumble.csv"))
 
 date_from_home <- read_csv(here("data", "date from home.csv"))
 
-date_ideas <- read_csv(here("data", "date_ideas.csv"))
+date_ideas <- read_csv(here("data", "Date ideas.csv"))
 
 dating_apps <- read_csv(here("data", "Dating apps.csv"))
 
@@ -67,29 +80,20 @@ pandemic_dating <- full_join(outdoor_dates, date_ideas, by = "date") %>%
   select(date, outdoor_dates, date_ideas)
 ```
 
-
 ```{r}
-# adding first date etiquette to df
-
-pandemic_dating <-full_join(pandemic_dating, first_date_etiquette, by = "date") %>% 
-  rename(first_date_etiquette = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette)
-```
-
-
-```{r}
-# adding pandemic dating to df
+# adding match to df
 pandemic_dating <-full_join(pandemic_dating, match, by = "date")%>% 
   rename(match = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match)
+   select(date, outdoor_dates, date_ideas, match)
 ```
+
 
 ```{r}
 # adding romance column 
 
 pandemic_dating <-full_join(pandemic_dating, romance, by = "date")%>% 
   rename(romance = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance)
+   select(date, outdoor_dates, date_ideas, match, romance)
 ```
 
 ```{r}
@@ -97,21 +101,21 @@ pandemic_dating <-full_join(pandemic_dating, romance, by = "date")%>%
 
 pandemic_dating <-full_join(pandemic_dating, intimacy, by = "date")%>% 
   rename(intimacy = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy)
 ```
 
 ```{r}
 # adding video dating
 pandemic_dating <-full_join(pandemic_dating, video_dating, by = "date")%>% 
   rename(video_dating = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating)
 ```
 
 ```{r}
 # adding relationships column
-pandemic_dating <-full_join(pandemic_dating, relationships, by = "date") %>% 
+pandemic_dating <-full_join(pandemic_dating, relationship, by = "date") %>% 
   rename(relationships = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships)
 ```
 
 ```{r}
@@ -119,7 +123,7 @@ pandemic_dating <-full_join(pandemic_dating, relationships, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, hookups, by = "date") %>% 
     rename(hookups = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups)
   
 ```
 
@@ -128,7 +132,7 @@ pandemic_dating <-full_join(pandemic_dating, hookups, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, kissing, by = "date") %>% 
     rename(kissing = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing)
 ```
 
 ```{r}
@@ -136,7 +140,7 @@ pandemic_dating <-full_join(pandemic_dating, kissing, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, hugging, by = "date") %>% 
     rename(hugging = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging)
 ```
 
 ```{r}
@@ -144,7 +148,7 @@ pandemic_dating <-full_join(pandemic_dating, hugging, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, sex, by = "date") %>% 
     rename(sex = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex)
 ```
 
 ```{r}
@@ -152,7 +156,7 @@ pandemic_dating <-full_join(pandemic_dating, sex, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, date_from_home, by = "date") %>% 
     rename(date_from_home = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home)
 ```
 
 ```{r}
@@ -160,7 +164,7 @@ pandemic_dating <-full_join(pandemic_dating, date_from_home, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, hinge, by = "date") %>% 
     rename(hinge = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge)
 ```
 
 ```{r}
@@ -168,7 +172,7 @@ pandemic_dating <-full_join(pandemic_dating, hinge, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, bumble, by = "date") %>% 
     rename(bumble = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble)
 ```
 
 
@@ -177,7 +181,7 @@ pandemic_dating <-full_join(pandemic_dating, bumble, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, dating_apps, by = "date") %>% 
     rename(dating_apps = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps)
 ```
 
 ```{r}
@@ -185,7 +189,7 @@ pandemic_dating <-full_join(pandemic_dating, dating_apps, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, love, by = "date") %>% 
     rename(love = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps, love)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps, love)
 ```
 
 ```{r}
@@ -193,6 +197,15 @@ pandemic_dating <-full_join(pandemic_dating, love, by = "date") %>%
 
 pandemic_dating <-full_join(pandemic_dating, online_dating, by = "date") %>% 
     rename(online_dating = hits) %>% 
-   select(date, outdoor_dates, date_ideas, first_date_etiquette, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps, love, online_dating)
+   select(date, outdoor_dates, date_ideas, match, romance, intimacy, video_dating, relationships, hookups, kissing, hugging, sex, date_from_home, hinge, bumble, dating_apps, love, online_dating)
+```
+
+```{r}
+
+# save as a csv file
+
+write.csv(pandemic_dating, here("data", "search_terms_full_dataset.csv"), row.names=TRUE)
+
+
 ```
 

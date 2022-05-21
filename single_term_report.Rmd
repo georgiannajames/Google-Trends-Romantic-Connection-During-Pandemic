@@ -23,7 +23,7 @@ library(janitor)
 
 ```
 
-## "Online Dating" Data Collection
+## Search Term Data Collection
 
 ```{r}
 # create a df for the original search terms
@@ -62,28 +62,36 @@ single_term_df <- read.csv(here("data", glue::glue("{params$my_term}.csv")))
 ```
 
 ```{r}
-# create dummy variable for pandemic 
+# create dummy variable for pandemic dates and year
 
 single_term_df <- single_term_df %>% 
   select(date, hits) %>% 
   mutate(
-    date= ymd(date)) %>% 
+    date= ymd(date),
+    year = year(date)
+        ) %>% 
+  filter(
+    date > ymd(20170811) & date < ymd(20180911) | date > ymd(20190811) & date < ymd(20200911)
+    ) %>% 
   mutate(
-    pandemic = ifelse(date %within% interval(ymd(20170521), ymd(20200311)), 0, 1)
+    pandemic_dates = ifelse(date %within% interval(ymd(20170811), ymd(20180310)) | date %within% interval(ymd(20190811), ymd(20200310)), 0, 1),
+    pandemic_year = ifelse(year == 2017 | year == 2018, 0, 1)
   )
 
+
 ```
+
 ```{r}
 
 # run a regression of the effect of the pandemic on the search term
 
-single_term_regression <- lm(hits ~ pandemic, data = single_term_df)
+single_term_regression <- lm(hits ~ pandemic_dates + pandemic_year, data = single_term_df)
 
 stargazer(single_term_regression,
            type = "text",
             title=glue::glue("{params$my_term} Regression Table"), 
   dep.var.labels=glue::glue("{params$my_term}"),
-  covariate.labels=c("Pandemic","No Pandemic"),
+  covariate.labels=c("March 11 - August 10 ","2020", "No Pandemic"),
   digits=3, out = glue::glue("{params$my_term}.txt"))
 
 ```

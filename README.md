@@ -18,6 +18,22 @@ library(here)
 
 ### Instructions 
 
+1. ```Google_trends_COVID-connection.Rmd```
+
+* run this R Markdown file in its entirety to create a data frame for the original 17 search terms used in this research; test the ```gtrendsR``` search functions; and create a data frame to store all related search queries for each search
+
+2. ```single_term_report.Rmd```
+
+* run this R Markdown file in its entirety to understand what will be included in each report 
+
+3. ``` search_term_report_render.R```
+
+* run this code to iterate ```single_term_report.Rmd``` over all the terms in the ```terms``` data fram
+
+4. ```combining_search_term_data.Rmd```
+
+* this code can be used to combine all of the data sets created from step 4 into one file: ```search_terms_full_dataset.csv```
+
 
 
 ## Data Created 

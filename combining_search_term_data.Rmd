@@ -209,3 +209,41 @@ write.csv(pandemic_dating, here("data", "search_terms_full_dataset.csv"), row.na
 
 ```
 
+```{r}
+
+# combining all search data 
+
+pandemic_dating_reg <- pandemic_dating %>% 
+    mutate(
+      total_hits = rowSums(select(., -date)),
+    date= ymd(date),
+    month = month(date),
+    day = day(date),
+    year = year(date)
+        ) %>% 
+  filter(
+    date > ymd(20170811) & date < ymd(20180911) | date > ymd(20190811) & date < ymd(20200911)
+    ) %>% 
+  mutate(
+    pandemic_dates = ifelse(date %within% interval(ymd(20170811), ymd(20180310)) | date %within% interval(ymd(20190811), ymd(20200310)), 0, 1),
+    pandemic_year = ifelse(year == 2017 | year == 2018, 0, 1),
+    pandemic = ifelse(pandemic_dates == 1 & pandemic_year == 1, 1, 0)
+  )
+
+pandemic_dating_reg
+```
+```{r}
+
+# regress using total hits
+
+total_hits_regression <- lm(total_hits ~ pandemic, data = pandemic_dating_reg)
+
+stargazer(total_hits_regression,
+           type = "text",
+            title="Search Term Regression Table", 
+  dep.var.labels= "Total Hits",
+  covariate.labels=c("Pandemic", "No Pandemic"),
+  digits=3, out = glue::glue("totalhits.txt"))
+```
+
+

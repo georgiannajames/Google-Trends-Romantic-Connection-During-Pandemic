@@ -27,3 +27,8 @@ library(here)
 * 17 individual data sets containing search-rate data for each search term
 
 * ```further_terms.csv```: a data set consisting of 917 additional terms collected using the ```related_queries``` ```gtrendsR``` function for each original search term
+
+
+## Further Work
+
+To extend this analysis, iterate the report over the ```further_terms.csv``` to create 239,337 data points on RSV of romantic connection related search terms. 

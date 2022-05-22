@@ -236,13 +236,13 @@ pandemic_dating_reg
 
 # regress using total hits
 
-total_hits_regression <- lm(total_hits ~ pandemic, data = pandemic_dating_reg)
+total_hits_regression <- lm(total_hits ~ pandemic_dates + pandemic_year + pandemic, data = pandemic_dating_reg)
 
 stargazer(total_hits_regression,
            type = "text",
             title="Search Term Regression Table", 
   dep.var.labels= "Total Hits",
-  covariate.labels=c("Pandemic", "No Pandemic"),
+  covariate.labels=c("Pandemic","2019- 2020","March 11 - August 10 ", "No Pandemic"),
   digits=3, out = glue::glue("totalhits.txt"))
 ```
 

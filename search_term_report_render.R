@@ -1,4 +1,4 @@
-# create a function to iterize over every term in the search terms df
+# create a function to iterate over every term in the search terms df
 
 reports <- tibble(
   single_term = unique(terms$value),

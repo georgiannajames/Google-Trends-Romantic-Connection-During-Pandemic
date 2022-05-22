@@ -1,0 +1,133 @@
+Single Search Term Report
+================
+Georgianna James
+2022-05-20
+
+``` r
+# required packages 
+
+library(gtrendsR)
+library(tidyverse)
+library(lubridate)
+library(stargazer)
+library(here)
+library(janitor)
+library(ggplot2)
+```
+
+## Search Term Data Collection
+
+``` r
+# create a df for the original search terms
+
+terms <- read_csv(here("data", "search_terms.csv"))
+```
+
+    ## New names:
+    ## Rows: 17 Columns: 2
+    ## ── Column specification
+    ## ───────────────────────────────────────────────────────────────────────────────────────────────────────────── Delimiter: "," chr
+    ## (1): value dbl (1): ...1
+    ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ Specify the column types or set `show_col_types = FALSE`
+    ## to quiet this message.
+    ## • `` -> `...1`
+
+``` r
+# search the term trends using gtrends 
+
+single_term_report <- gtrends(
+  c(params$my_term),
+  geo='US')
+
+# save as an RDS
+
+saveRDS(single_term_report, here("data", glue::glue("{params$my_term}.RDS")))
+
+#plot
+
+plot(single_term_report)
+```
+
+![](/Users/georgiannajames/cfss/Google-Trends-Romantic-Connection-During-Pandemic/reports/term-report-Video%20dating_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+``` r
+# create a data frame for the single search term
+
+write.csv(single_term_report$interest_over_time, here("data", glue::glue("{params$my_term}.csv")), row.names=TRUE)
+
+single_term_df <- read.csv(here("data", glue::glue("{params$my_term}.csv")))
+```
+
+``` r
+# create dummy variable for pandemic dates and year
+
+single_term_df <- single_term_df %>% 
+  select(date, hits) %>% 
+  mutate(
+    date= ymd(date),
+    month = month(date),
+    day = day(date),
+    year = year(date)
+        ) %>% 
+  filter(
+    date > ymd(20170811) & date < ymd(20180911) | date > ymd(20190811) & date < ymd(20200911)
+    ) %>% 
+  mutate(
+    pandemic_dates = ifelse(date %within% interval(ymd(20170811), ymd(20180310)) | date %within% interval(ymd(20190811), ymd(20200310)), 0, 1),
+    pandemic_year = ifelse(year == 2017 | year == 2018, 0, 1),
+    pandemic = ifelse(pandemic_dates == 1 & pandemic_year == 1, 1, 0)
+  )
+```
+
+``` r
+# run a regression of the effect of the pandemic on the search term
+
+single_term_regression <- lm(hits ~ pandemic_dates + pandemic_year + pandemic, data = single_term_df)
+
+stargazer(single_term_regression,
+           type = "text",
+            title=glue::glue("{params$my_term} Regression Table"), 
+  dep.var.labels=glue::glue("{params$my_term}"),
+  covariate.labels=c("Pandemic","2019- 2020","March 11 - August 10 ", "No Pandemic"),
+  digits=3, out = glue::glue("{params$my_term}.txt"))
+```
+
+    ## 
+    ## Video dating Regression Table
+    ## ================================================
+    ##                          Dependent variable:    
+    ##                      ---------------------------
+    ##                             Video dating        
+    ## ------------------------------------------------
+    ## Pandemic                        0.430           
+    ##                                (2.892)          
+    ##                                                 
+    ## 2019- 2020                    -7.600***         
+    ##                                (2.815)          
+    ##                                                 
+    ## March 11 - August 10          16.855***         
+    ##                                (4.111)          
+    ##                                                 
+    ## No Pandemic                   55.200***         
+    ##                                (1.990)          
+    ##                                                 
+    ## ------------------------------------------------
+    ## Observations                     113            
+    ## R2                              0.243           
+    ## Adjusted R2                     0.222           
+    ## Residual Std. Error       10.902 (df = 109)     
+    ## F Statistic            11.682*** (df = 3; 109)  
+    ## ================================================
+    ## Note:                *p<0.1; **p<0.05; ***p<0.01
+
+``` r
+# add the related queries to the terms data frame 
+
+additional_terms <- single_term_report$related_queries %>% 
+  select(value)
+  
+
+further_terms <- rbind(further_terms, additional_terms)
+
+write.csv(further_terms, here("data", "further_terms.csv"), row.names=TRUE)
+```

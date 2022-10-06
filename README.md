@@ -5,7 +5,7 @@
 Psychologists recommended embracing virtual connections and getting creative with date ideas to avoid social deprivation and promote mental well-being during COVID-19 lock-down. This project analyzes internet search trends in order to gain insight into how individuals changed their behavior in regards to seeking romantic connections in the wake of the global pandemic. Findings suggest that while individuals have begun to embrace meeting online through dating apps, virtual connection likely does not satiate the human need for emotional and physical connection, as individuals still seek in person sexual contact via google search trends.
 
 
-See [slide deck](./Emotional and Physical Connection During a Public Health Crisis What Do Internet Search-Rates Tell Us.pdf) for more info & findings!
+See slide deck (located in repo) for more info & findings!
 
 
 
